@@ -28,13 +28,8 @@ const Matrix<T> multiply_naive(const Matrix<T> &A, const Matrix<T> &B)
 template <typename T>
 Matrix<T> Strassen(const Matrix<T> &A, const Matrix<T> &B) {
 	auto n = A.size();
-	if (n == 2) {
-		Matrix<T> C(2, std::vector<T>(2));
-		C[0][0] = A[0][0] * B[0][0] + A[0][1] * B[1][0];
-		C[0][1] = A[0][0] * B[0][1] + A[0][1] * B[1][1];
-		C[1][0] = A[1][0] * B[0][0] + A[1][1] * B[1][0];
-		C[1][1] = A[1][0] * B[0][1] + A[1][1] * B[1][1];
-		return C;
+	if (n <= 16) {
+		return multiply_naive(A, B);
 	}
 	std::vector<Matrix<T>> A_divided, B_divided;
 	Mat_div(A, A_divided);

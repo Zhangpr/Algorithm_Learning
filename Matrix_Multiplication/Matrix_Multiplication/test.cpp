@@ -10,7 +10,7 @@
 int main() {
 	srand(unsigned(time(0)));
 	Matrix<int> A, B;
-	unsigned n = 16;
+	unsigned n = 256;
 	for (unsigned i = 0; i != n; i++) {
 		A.push_back(std::vector<int>(n));
 		B.push_back(std::vector<int>(n));
