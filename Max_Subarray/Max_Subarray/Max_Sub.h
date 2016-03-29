@@ -5,30 +5,30 @@
 
 #include <iostream>
 
-//¼ÇÂ¼½á¹ûµÄ½á¹¹Ìå
+//è®°å½•ç»“æœçš„ç»“æ„ä½“
 template <typename Elt_type,  typename It_type>
 struct Result {
-	Elt_type sum;             //×î´ó×Ó´®µÄºÍ
-	It_type beg_it, end_it;   //Ö¸³ö×î´ó×Ó´®·¶Î§µÄÒ»¶Ôµü´úÆ÷
+	Elt_type sum;             //æœ€å¤§å­ä¸²çš„å’Œ
+	It_type beg_it, end_it;   //æŒ‡å‡ºæœ€å¤§å­ä¸²èŒƒå›´çš„ä¸€å¯¹è¿­ä»£å™¨
 };
 
-/* Çî¾ÙËùÓĞ¿ÉÄÜµÄ±©Á¦½â·¨£¬Ê±¼ä¸´ÔÓ¶ÈÎª¦¨(n^2),
- *  Input: Ò»¶Ôµü´úÆ÷£¬±íÊ¾Ñ°ÕÒ×î´ó×Ó´®µÄ·¶Î§,
-           Ò»¸ö±íÊ¾ÔªËØÀàĞÍµÄ¶ÔÏó,
- * Output: ¼ÇÂ¼½á¹ûµÄ½á¹¹Ìå                    */
+/* ç©·ä¸¾æ‰€æœ‰å¯èƒ½çš„æš´åŠ›è§£æ³•ï¼Œæ—¶é—´å¤æ‚åº¦ä¸ºÎ˜(n^2),
+ *  Input: ä¸€å¯¹è¿­ä»£å™¨ï¼Œè¡¨ç¤ºå¯»æ‰¾æœ€å¤§å­ä¸²çš„èŒƒå›´,
+           ä¸€ä¸ªè¡¨ç¤ºå…ƒç´ ç±»å‹çš„å¯¹è±¡,
+ * Output: è®°å½•ç»“æœçš„ç»“æ„ä½“                    */
 template <typename Elt_type, typename It_type>
 Result<Elt_type, It_type> maxSub_naive(It_type beg, It_type end, Elt_type ele) {
 	Result<Elt_type, It_type> maxSubarray{*beg, beg, ++It_type(beg)};
 	for (auto sub_beg = beg; sub_beg != end; ++sub_beg) {
 		auto sub_end = sub_beg;
-		//´¦Àí×Ó´®ÖĞµÚÒ»¸öÔªËØ
+		//å¤„ç†å­ä¸²ä¸­ç¬¬ä¸€ä¸ªå…ƒç´ 
 		Elt_type sub_sum = *sub_end++;
 		if (sub_sum > maxSubarray.sum) {
 			maxSubarray.sum = sub_sum;
 			maxSubarray.beg_it = sub_beg;
 			maxSubarray.end_it = sub_end;
 		}
-		//´¦Àí×Ó´®ÖĞÊ£ÓàÔªËØ
+		//å¤„ç†å­ä¸²ä¸­å‰©ä½™å…ƒç´ 
 		while (sub_end != end) {
 			sub_sum += *sub_end++;
 			if (sub_sum > maxSubarray.sum) {
@@ -41,10 +41,10 @@ Result<Elt_type, It_type> maxSub_naive(It_type beg, It_type end, Elt_type ele) {
 	return maxSubarray;
 }
 
-/* ·ÖÖÎ·¨Çó×î´ó×Ó´®£¬Ê±¼ä¸´ÔÓ¶ÈÎª¦¨(),
- *  Input: Ò»¶Ôµü´úÆ÷£¨Ö»ÄÜÎª¿É½øĞĞËãÊõÔËËãµÄµü´úÆ÷ÀàĞÍ£©,
-           Ò»¸öÓÃÒÔÖ¸Ã÷ÔªËØÀàĞÍµÄ²ÎÊı,
- * Output: ¼ÇÂ¼½á¹ûµÄ½á¹¹Ìå                    */
+/* åˆ†æ²»æ³•æ±‚æœ€å¤§å­ä¸²ï¼Œæ—¶é—´å¤æ‚åº¦ä¸ºÎ˜(nlgn),
+ *  Input: ä¸€å¯¹è¿­ä»£å™¨ï¼ˆåªèƒ½ä¸ºå¯è¿›è¡Œç®—æœ¯è¿ç®—çš„è¿­ä»£å™¨ç±»å‹ï¼‰,
+           ä¸€ä¸ªç”¨ä»¥æŒ‡æ˜å…ƒç´ ç±»å‹çš„å‚æ•°,
+ * Output: è®°å½•ç»“æœçš„ç»“æ„ä½“                    */
 template <typename Elt_type, typename It_type>
 Result<Elt_type, It_type> maxSub_recu(It_type beg, It_type end, Elt_type ele) {
 	if (beg + 1 == end)
@@ -69,10 +69,10 @@ Result<Elt_type, It_type> maxSub_recu(It_type beg, It_type end, Elt_type ele) {
 	}
 }
 
-/* Ñ°ÕÒ¿ç¹ıÖĞ¼äÎ»ÖÃµÄ×î´ó×Ó´®
- * Input: beg Ê×ÔªËØµü´úÆ÷, mid ÖĞ¼äÔªËØºóÒ»¸öµü´úÆ÷, 
-          end Î²ºóµü´úÆ÷, ele ÓÃÒÔÖ¸Ã÷ÔªËØÀàĞÍµÄ²ÎÊı
- * Output: ¼ÇÂ¼¿ç¹ıÖĞ¼äÎ»ÖÃ×î´ó×Ó´®µÄ½á¹¹Ìå                                */
+/* å¯»æ‰¾è·¨è¿‡ä¸­é—´ä½ç½®çš„æœ€å¤§å­ä¸²
+ * Input: beg é¦–å…ƒç´ è¿­ä»£å™¨, mid ä¸­é—´å…ƒç´ åä¸€ä¸ªè¿­ä»£å™¨, 
+          end å°¾åè¿­ä»£å™¨, ele ç”¨ä»¥æŒ‡æ˜å…ƒç´ ç±»å‹çš„å‚æ•°
+ * Output: è®°å½•è·¨è¿‡ä¸­é—´ä½ç½®æœ€å¤§å­ä¸²çš„ç»“æ„ä½“                                */
 template <typename Elt_type, typename It_type>
 Result<Elt_type, It_type> find_maxCross(It_type beg, It_type mid, 
 	                                    It_type end, Elt_type ele)
