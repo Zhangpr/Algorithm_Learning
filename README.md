@@ -6,3 +6,4 @@ Power: 一个数的正整数次幂;
 Fibonacci_Num: Fibonacci数的计算;    
 Matrix_Multiplication: 矩阵乘法;  
 Max_Subarray: 最大子串问题;  
+Comparison_Sort: 冒泡排序、插入排序、归并排序、堆排序、快速排序  
