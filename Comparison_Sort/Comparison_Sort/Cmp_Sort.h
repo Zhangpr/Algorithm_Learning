@@ -77,6 +77,50 @@ void mergeSort(It_type beg, It_type end) {
 		*it = *sorted_arr_it;
 }
 
+// 堆排序，时间复杂度为Theta(nlgn)
+// Input: 一对迭代器（需定义了算术运算，指向的元素需定义了'<'运算）
+// Output: void
+template <typename It_type>
+void heapsort(It_type beg, It_type end) {
+	buildMaxHeap(beg, end);
+
+	for (auto it = end - 1; it != beg; --it) {
+		std::swap(*beg, *it);
+		maxHeapify(beg, it, beg);
+	}
+}
+
+template <typename It_type>
+void maxHeapify(It_type beg, It_type end, It_type index) {
+	auto left = end, right = end;
+/*	if (end - beg >= 2 && index <= beg + (end - beg - 2) / 2)
+		left = beg + 2 * (index - beg) + 1;
+	if (end - beg >= 3 && index <= beg + (end - beg -3) / 2)
+		right = beg + 2 * (index - beg) + 2;
+*/
+	if (2 * (index - beg) + 1 < end - beg)
+		left = beg + 2 * (index - beg) + 1;
+	if (2 * (index - beg) + 2 < end - beg)
+		right = beg + 2 * (index - beg) + 2;
+
+	auto largest = index;
+	if (left < end && *left > *index)
+		largest = left;
+	if (right < end && *right > *largest)
+		largest = right;
+	if (largest != index) {
+		std::swap(*index, *largest);
+		maxHeapify(beg, end, largest);
+	}
+}
+
+template <typename It_type>
+void buildMaxHeap(It_type beg, It_type end) {
+	for (auto it = beg + (end - beg - 2) / 2; it != beg; --it)
+		maxHeapify(beg, end, it);
+	maxHeapify(beg, end, beg);
+}
+
 // 随机化快速排序，时间复杂度为Theta(nlgn)
 // Input: 一对迭代器（指向的元素需定义了'<'运算） 
 // Output: void
